@@ -1,6 +1,13 @@
-export default function App() {
-  return (
+import Body from "./components/Body";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
-    <h1 className="text-3xl font-bold text-primary"> NetflixGPT </h1>
-  )
-}
+const App = () => {
+  return (
+    <>
+      <Body />
+      <Footer />
+    </>
+  );
+};
+export default App;
