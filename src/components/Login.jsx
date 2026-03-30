@@ -1,6 +1,34 @@
+import { useRef, useState } from "react";
 import Header from "./Header.jsx";
+import { validate } from "../utils/validate.js";
 
 const Login = () => {
+  const [isMember, setIsMember] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const inputStyle =
+    "px-4 py-3 w-full bg-black/60 border border-gray-500 rounded text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600";
+
+  function handleToggle() {
+    setIsMember((prev) => !prev);
+    setErrorMessage("");
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!emailRef.current || !passwordRef.current) return;
+
+    const email = emailRef.current.value.trim();
+    const password = passwordRef.current.value;
+
+    const error = validate(email, password);
+    setErrorMessage(error);
+  }
+
   return (
     <div className="relative w-full h-screen text-white">
       {/* Background */}
@@ -10,16 +38,14 @@ const Login = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Gradient Overlay (Improved) */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-linear-to-t from-black via-black/70 to-black/40"></div>
 
-      {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
 
-        {/* Center Section */}
         <div className="flex flex-1 items-center justify-center px-4">
-          <div className="max-w-2xl text-center space-y-6">
+          <div className="w-full max-w-5xl text-center space-y-6">
             <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
               Unlimited movies, shows, and more
             </h1>
@@ -33,23 +59,79 @@ const Login = () => {
               membership.
             </p>
 
-            {/* Input + Button */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mt-4">
-              <input
-                type="email"
-                placeholder="Email address"
-                className="px-4 py-3 w-full sm:w-80 bg-black/60 border border-gray-500 rounded text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
-              />
-              <input
-                type="password"
-                placeholder="password"
-                className="px-4 py-3 w-full sm:w-80 bg-black/60 border border-gray-500 rounded text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600"
-              />
+            {/* FORM */}
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                {/* Full Name */}
+                <div className="flex-1">
+                  <div
+                    className={`transition-all duration-300 ease-in-out ${
+                      isMember
+                        ? "opacity-0 scale-95 pointer-events-none"
+                        : "opacity-100 scale-100"
+                    }`}
+                  >
+                    <input
+                      type="text"
+                      placeholder="Full name"
+                      className={inputStyle}
+                      onChange={() => setErrorMessage("")}
+                    />
+                  </div>
+                </div>
 
-              <button className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded font-semibold w-full">
-                Get Started
-              </button>
-            </div>
+                {/* Email */}
+                <div className="flex-1">
+                  <input
+                    ref={emailRef}
+                    type="email"
+                    placeholder="Email address"
+                    className={inputStyle}
+                    onChange={() => setErrorMessage("")}
+                  />
+                </div>
+
+                {/* Password */}
+                <div className="flex-1">
+                  <input
+                    ref={passwordRef}
+                    type="password"
+                    placeholder="Password"
+                    className={inputStyle}
+                    onChange={() => setErrorMessage("")}
+                  />
+                </div>
+
+                {/* Button */}
+                <button
+                  type="submit"
+                  className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded font-bold w-full sm:w-auto"
+                >
+                  {isMember ? "Watch Now" : "Get Started"}
+                </button>
+              </div>
+
+              {/* Toggle */}
+              <p className="text-md my-3">
+                {isMember ? "Not a member?" : "Already a member?"}
+                <button
+                  type="button"
+                  onClick={handleToggle}
+                  className="text-red-600 ml-2 font-semibold"
+                >
+                  {isMember ? "Signup!" : "Login!"}
+                </button>
+              </p>
+
+              {/* Error */}
+              {errorMessage && (
+                <div className="text-left">
+                  <p className="text-red-400 text-sm font-medium">
+                    {errorMessage}
+                  </p>
+                </div>
+              )}
+            </form>
           </div>
         </div>
       </div>
