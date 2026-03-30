@@ -2,6 +2,9 @@
 
 - Create Vite Reat
 - Configure Tailwind  
+- login form
+- sign Up form
+- form validation
 
 ## Features
 - Sign In/Up page 
@@ -16,3 +19,8 @@
 - Netflix GPT
     - Search Bar
     - MOvie Suggestions
+
+## Firebase
+- setup
+- deploy to production
+- create signUp
