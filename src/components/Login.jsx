@@ -1,8 +1,15 @@
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import Header from "./Header.jsx";
 import { validate } from "../utils/validate.js";
+import { auth } from "../utils/firebase.js";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isMember, setIsMember] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -27,6 +34,40 @@ const Login = () => {
 
     const error = validate(email, password);
     setErrorMessage(error);
+
+    if (error == null) {
+      // sign IN / Sign Up
+
+      if (isMember) {
+        //login
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // console.log(user)
+            navigate("/browse");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorCode + "-" + errorMessage);
+          });
+      } else {
+        // signUp
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
+            setErrorMessage("Account Created Sucessfully !");
+            navigate("/browse");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            setErrorMessage(errorCode + "-" + errorMessage);
+          });
+      }
+    }
   }
 
   return (
