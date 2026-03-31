@@ -6,6 +6,7 @@ import { auth } from "../utils/firebase.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile
 } from "firebase/auth";
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
-
+  const fnameRef = useRef(null);
   const inputStyle =
     "px-4 py-3 w-full bg-black/60 border border-gray-500 rounded text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-red-600";
 
@@ -31,6 +32,7 @@ const Login = () => {
 
     const email = emailRef.current.value.trim();
     const password = passwordRef.current.value;
+    const fname = fnameRef.current.value.trim();
 
     const error = validate(email, password);
     setErrorMessage(error);
@@ -59,7 +61,22 @@ const Login = () => {
             // Signed up
             const user = userCredential.user;
             setErrorMessage("Account Created Sucessfully !");
-            navigate("/browse");
+            //update profile
+            updateProfile(auth.currentUser, {
+              displayName: fname,
+              photoURL:
+                "https://cdn.vectorstock.com/i/1000v/51/87/student-avatar-user-profile-icon-vector-47025187.jpg",
+            })
+              .then(() => {
+                // Profile updated!
+                // ...
+                navigate("/browse");
+              })
+              .catch((error) => {
+                // An error occurred
+                // ...
+              });
+            // navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -113,6 +130,7 @@ const Login = () => {
                     }`}
                   >
                     <input
+                      ref={fnameRef}
                       type="text"
                       placeholder="Full name"
                       className={inputStyle}

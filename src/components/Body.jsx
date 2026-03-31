@@ -8,11 +8,19 @@ import { addUser, removeUser } from "../utils/stores/userSlice.js";
 
 const Body = () => {
   const dispatch = useDispatch();
+  // to add & remoeve userData on login , signOut ,signUp
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const { email, uid, displayName } = user;
-        dispatch(addUser({ uid: uid, email: email, displayName: displayName }));
+        const { email, uid, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          }),
+        );
       } else {
         dispatch(removeUser());
       }
