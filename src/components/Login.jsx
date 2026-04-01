@@ -1,16 +1,15 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router";
+
 import Header from "./Header.jsx";
 import { validate } from "../utils/validate.js";
 import { auth } from "../utils/firebase.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  updateProfile
+  updateProfile,
 } from "firebase/auth";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [isMember, setIsMember] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -46,8 +45,6 @@ const Login = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            // console.log(user)
-            navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -70,13 +67,11 @@ const Login = () => {
               .then(() => {
                 // Profile updated!
                 // ...
-                navigate("/browse");
               })
               .catch((error) => {
                 // An error occurred
                 // ...
               });
-            // navigate("/browse");
           })
           .catch((error) => {
             const errorCode = error.code;
