@@ -1,6 +1,9 @@
 import Header from "./Header";
+import { useNowPlayingMovies } from "../utils/hooks/useNowPlayingMovies";
 
 const Browse = () => {
+  // calls all movieAPI
+useNowPlayingMovies()
   return (
     <>
       <Header />
@@ -10,4 +13,4 @@ const Browse = () => {
     </>
   );
 };
-export default Browse
+export default Browse;
