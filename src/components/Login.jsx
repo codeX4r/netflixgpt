@@ -3,13 +3,16 @@ import { useRef, useState } from "react";
 import Header from "./Header.jsx";
 import { validate } from "../utils/validate.js";
 import { auth } from "../utils/firebase.js";
+import { useDispatch } from "react-redux";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { addUser } from "../utils/stores/userSlice.js";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [isMember, setIsMember] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -66,7 +69,15 @@ const Login = () => {
             })
               .then(() => {
                 // Profile updated!
-                // ...
+                const { uid, email, displayName, photoURL } = auth.currentUser;
+                dispatch(
+                  addUser({
+                    uid: uid,
+                    email: email,
+                    displayName: displayName,
+                    photoURL: photoURL,
+                  }),
+                );
               })
               .catch((error) => {
                 // An error occurred

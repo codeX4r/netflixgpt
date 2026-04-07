@@ -35,7 +35,7 @@ const Header = () => {
     });
 
     // unsubscribe when component unmounts
-    return () => unsubscribe()
+    return () => unsubscribe();
   }, []);
 
   function handleSignOut() {
