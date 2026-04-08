@@ -1,15 +1,15 @@
 import Header from "./Header";
 import { useNowPlayingMovies } from "../utils/hooks/useNowPlayingMovies";
+import MainContainer from "./MainContainer.jsx"
 
 const Browse = () => {
   // calls all movieAPI
-useNowPlayingMovies()
+  useNowPlayingMovies()
   return (
     <>
       <Header />
-      <main className="pt-20 bg-black min-h-screen flex flex-col">
-        <div className="grow text-amber-200">this is browse</div>
-      </main>
+      <MainContainer />
+
     </>
   );
 };

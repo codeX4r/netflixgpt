@@ -12,7 +12,6 @@ export const useNowPlayingMovies = () => {
         fetch(NOW_PLAYING_API, options)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res?.results)
                 // add movies to nowPlayingMovies
                 dispatch(addNowPlayingMovie(res?.results))
             }
