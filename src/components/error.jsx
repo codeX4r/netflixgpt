@@ -120,6 +120,3 @@ export default function Error() {
     </div>
   );
 }
-
-// Optional: runtime prop validation (JS alternative to TS)
-NetflixErrorPage.propTypes = {};
