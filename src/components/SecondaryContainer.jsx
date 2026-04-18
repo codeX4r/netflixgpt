@@ -8,17 +8,6 @@ const SecondaryContainer = () => {
     const { data: upcoming, isLoading: loadingUpcoming } = useUpcomingQuery();
     const { data: topRated, isLoading: loadingTopRated } = useTopRatedQuery();
 
-    console.log(
-        nowPlaying,
-        popular,
-        topRated,
-        upcoming,
-        loadingNowPlaying,
-        loadingPopular,
-        loadingTopRated,
-        loadingUpcoming,
-    );
-
     if (loadingNowPlaying || loadingPopular || loadingTopRated || loadingUpcoming) {
         return (
             <div className="bg-black text-white p-6">
@@ -36,7 +25,7 @@ const SecondaryContainer = () => {
   space-y-3
    bg-black
 ">
-  
+
 
             <MovieList movie={nowPlaying} title="Now Playing" />
             <MovieList movie={topRated} title="TopRated" />
