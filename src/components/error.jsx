@@ -15,7 +15,7 @@ function safeNavigate(path) {
   }
 }
 
-export default function NetflixErrorPage() {
+export default function Error() {
   let error;
 
   try {
