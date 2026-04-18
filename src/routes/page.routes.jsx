@@ -1,7 +1,7 @@
 import Login from "../components/Login.jsx"
 import Browse from "../components/Browse.jsx"
 import { createBrowserRouter } from "react-router-dom";
-import Error from "../components/Error.jsx"
+import Error from "../components/Error"
 
 export const appRouter = createBrowserRouter([
   {

@@ -1,7 +1,6 @@
 
 import { useRouteError } from "react-router-dom";
 
-
 // Utility: safe navigation without requiring Router
 function safeNavigate(path) {
   if (window.history.length > 1) {
