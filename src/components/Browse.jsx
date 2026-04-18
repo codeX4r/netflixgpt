@@ -1,16 +1,30 @@
+import { useSelector } from "react-redux"
 import Header from "./Header";
-import { useNowPlayingMovies } from "../utils/hooks/useNowPlayingMovies";
+import { useNowPlayingQuery } from "../utils/services/movieApi.js";
 import MainContainer from "./MainContainer.jsx"
+import SecondaryContainer from "./SecondaryContainer.jsx"
+import GptSearch from "./GptSearch.jsx";
 
 const Browse = () => {
+
+  const isGpt = useSelector((store) => store.gpt.showGpt)
+
   // calls all movieAPI
-  useNowPlayingMovies()
+  useNowPlayingQuery()
   return (
     <>
       <Header />
-      <MainContainer />
+      {isGpt ? (<>
+        <GptSearch />
+      </>
+      ) : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
 
     </>
   );
-};
+}
 export default Browse;

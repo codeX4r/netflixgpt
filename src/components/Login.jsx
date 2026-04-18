@@ -110,7 +110,7 @@ const Login = () => {
 
         <div className="flex flex-1 items-center justify-center px-4">
           <div className="w-full max-w-5xl text-center space-y-6">
-            <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold">
               Unlimited movies, shows, and more
             </h1>
 

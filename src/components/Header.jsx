@@ -3,17 +3,21 @@ import logo from "../assets/images/logo.png";
 import { auth } from "../utils/firebase.js";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-
 import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/stores/userSlice.js";
+import { toggleShow } from "../utils/stores/gptSlice.js";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const isGpt = useSelector((store) => store.gpt.showGpt)
 
+  function handleGPT() {
+    dispatch(toggleShow())
+  }
   // to add & remoeve userData on login , signOut ,signUp
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -49,27 +53,34 @@ const Header = () => {
   }
 
   return (
-    <header className="flex items-center justify-between px-6 py-4 bg-black/10 fixed w-full top-0 z-50">
-      {/* Logo */}
-      <img src={logo} alt="logo" className="w-32 object-contain" />
+    <header className="
+  fixed top-0 left-0 w-full z-50 
+  flex justify-between items-center 
+  px-4 sm:px-6 md:px-12 py-3
+  bg-linear-to-b from-black/80 to-transparent
+">
+
+      <img src={logo} className="w-24 sm:w-28 md:w-32" />
+
       {user && (
-        <div className="flex items-center gap-4">
-          {/* Profile Image */}
+        <div className="flex items-center gap-2 sm:gap-4">
           <img
             src={user.photoURL}
-            alt="profile"
-            className="w-10 h-10 rounded-full object-cover cursor-pointer"
+            className="w-8 h-8 md:w-10 md:h-10 rounded-full"
           />
 
-          {/* Sign Out Button */}
-          {
-            <button
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition duration-200"
-              onClick={handleSignOut}
-            >
-              Sign Out
-            </button>
-          }
+          <button
+            onClick={handleGPT}
+            className="bg-blue-400 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm rounded"
+          >
+            Search GPT
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="bg-red-600 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm rounded"
+          >
+            Sign Out
+          </button>
         </div>
       )}
     </header>
